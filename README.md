@@ -1,4 +1,4 @@
 # Option-Pricing-Library
 
-Currently Supported Methods
--Black Scholes Method (European Option)
+In Development - Currently Supported Methods
+1. Black Scholes Method (European Option)
