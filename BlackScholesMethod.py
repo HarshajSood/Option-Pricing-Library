@@ -1,9 +1,5 @@
 from math import log, sqrt, pi, exp
 from scipy.stats import norm
-from datetime import datetime, date
-import numpy as np
-import pandas as pd
-from pandas import DataFrame
 
 """
 S - current price of underlying asset
