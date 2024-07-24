@@ -57,4 +57,4 @@ def Gamma(S,K,T,r,q,v):
 def Vanna(S,K,T,r,q,v):
     return -exp(-q*T)*norm.pdf(d1(S,K,T,r,q,v))*d2(S,K,T,r,q,v)/v
 def Volga(S,K,T,r,q,v):
-    return -exp(-q*T)*sqrt(T)*S*norm.pdf(d1(S,K,T,r,q,v))*d1*d2/v
+    return -exp(-q*T)*sqrt(T)*S*norm.pdf(d1(S,K,T,r,q,v))*d1(S,K,T,r,q,v)*d2(S,K,T,r,q,v)/v
