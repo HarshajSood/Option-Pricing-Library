@@ -7,7 +7,7 @@ T - time to maturity/expiry (in years)
 r - continuous compounding risk free interest rate
 v - implied volatility
 N - maximum number of steps
-putCall - Put = 1, Call = 2
+OT - OptionType - Put = 1, Call = 2
 
 """
 """
@@ -28,7 +28,7 @@ def pd(T,r,v,N):
 def disc(T,r,N):
     return exp(-r*T/N)
 
-def binomialOptionPricing(S,K,T,r,v,N, putCall):
+def BinomialOptionPricing(S,K,T,r,v,N, OT):
     Steps = [0]*(N+1)
     C = [0]*(N+1)
 
@@ -38,10 +38,12 @@ def binomialOptionPricing(S,K,T,r,v,N, putCall):
         Steps[j] = Steps[j-1]*(u(T,v,N)/d(T,v,N))
     
     for j in range(1, N+1):
-        if putCall == 1: #Put
+        if OT == 1: #Put
             C[j]=max(K-Steps[j],0)
-        elif putCall == 2: #Call
+        elif OT == 2: #Call
             C[j]=max(Steps[j]-K,0)
+        else:
+            return "invalid Option Type"
     
     for i in range(N,0,-1):
         for j in range(0,i):

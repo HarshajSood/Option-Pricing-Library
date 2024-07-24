@@ -8,6 +8,7 @@ T - time to maturity/expiry (in years)
 r - continuous compounding risk free interest rate
 q - dividend yield
 v - implied volatility
+OT - OptionType Put = 1, Call = 2
 
 N() - Normal Distribution
 N(d1) - the probability of receiving the underlying asset at option expiration 
@@ -34,22 +35,54 @@ def blackScholesCall(S,K,T,r,q,v):
 def blackScholesPut(S,K,T,r,q,v):
     return K*exp(-r*T)*norm.cdf(-d2(S,K,T,r,q,v)) - exp(-q*T)*S*norm.cdf(-d1(S,K,T,r,q,v))
 
+def BlackScholes(S,K,T,r,q,v,OT)
+    if OT==1:
+        return blackScholesPut(S,K,T,r,q,v)
+    elif OT==2:
+        return blackScholesCall(S,K,T,r,q,v)
+    else:
+        return "Invalid Option Type"
+
 
 ## First Order Greeks
 def callDelta(S,K,T,r,q,v):
     return  exp(-q*T)*norm.cdf(d1(S,K,T,r,q,v))
 def putDelta(S,K,T,r,q,v):
     return -exp(-q*T)*norm.cdf(-d1(S,K,T,r,q,v))
+def Delta(S,K,T,r,q,v,OT):
+    if OT==1:
+        return putDelta(S,K,T,r,q,v)
+    elif OT==2:
+        return callDelta(S,K,T,r,q,v)
+    else:
+        return "Invalid Option Type"
+
 def Vega(S,K,T,r,q,v):
     return (S*norm.pdf(d1(S,K,T,r,q,v))*exp(-q*T)*sqrt(T))
+
 def callTheta(S,K,T,r,q,v):
     return -(exp(-q*T)*S*norm.pdf(d1(S,K,T,r,q,v))*v)/(2*sqrt(T)) - r*K*exp(-r*T)*norm.cdf(d2(S,K,T,r,q,v))+q*exp(-q*T)*S*norm.cdf(d1(S,K,T,r,q,v))
 def putTheta(S,K,T,r,q,v):
     return -(exp(-q*T)*S*norm.pdf(d1(S,K,T,r,q,v))*v)/(2*sqrt(T)) + r*K*exp(-r*T)*norm.cdf(-d2(S,K,T,r,q,v))-q*exp(-q*T)*S*norm.cdf(-d1(S,K,T,r,q,v))
+def Theta(S,K,T,r,q,v,OT):
+    if OT==1:
+        return putTheta(S,K,T,r,q,v)
+    elif OT==2:
+        return callTheta(S,K,T,r,q,v)
+    else:
+        return "Invalid Option Type"
+
 def callRho(S,K,T,r,q,v):
     return K*T*exp(-r*T)*norm.cdf(d2(S,K,T,r,q,v))
 def putRho(S,K,T,r,q,v):
     return -K*T*exp(-r*T)*norm.cdf(-d2(S,K,T,r,q,v))
+def Rho(S,K,T,r,q,v,OT):
+    if OT==1:
+        return putRho(S,K,T,r,q,v)
+    elif OT==2:
+        return callRho(S,K,T,r,q,v)
+    else:
+        return "Invalid Option Type"
 
 ## Second Order Greeks
 def Gamma(S,K,T,r,q,v):
